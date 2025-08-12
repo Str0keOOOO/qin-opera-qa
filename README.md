@@ -15,5 +15,7 @@ pnpm run serve
 pnpm run build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+# 待办事项
+
+- [ ] npm i @dcloudio/types -D
+- [ ] 字蛛
