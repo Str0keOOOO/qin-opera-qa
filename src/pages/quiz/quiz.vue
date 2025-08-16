@@ -1,116 +1,106 @@
-<template>
-  <view class="launch-container" :style="{background: '#F5F5DC'}">
-    <!-- 古装人物剪影 -->
-    <image
-        class="character-silhouette"
-        src="/static/figures/character-silhouette.png"
-        mode="aspectFit"
-    />
-
-    <!-- 镜子元素(带数字80) -->
-    <view class="mirror-container">
-      <image
-          class="mirror"
-          src="/static/figures/mirror.png"
-          mode="aspectFit"
-      />
-      <text class="mirror-text">80</text>
-    </view>
-
-    <!-- 开始游戏按钮 -->
-    <view class="start-btn" @click="navigateWithFade">
-      <image
-          class="btn-bg"
-          src="/static/figures/start-btn-bg.png"
-          mode="aspectFit"
-      />
-      <text class="btn-text">开始游戏</text>
-    </view>
-
-    <!-- 左下角橙色方块(数字126) -->
-    <view class="corner-tag">
-      <text>126</text>
-    </view>
-  </view>
-</template>
-
 <script setup lang="ts">
-function navigateWithFade() {
+import {ref} from 'vue';
+import {onLoad} from '@dcloudio/uni-app';
+import {useQaData} from '@/composable/useQaData';
+
+const {useLevels} = useQaData();
+
+const moduleId = ref(0);
+const levels = useLevels(moduleId);
+
+onLoad((options: any) => {
+  moduleId.value = Number(options?.moduleId);
+});
+
+function startGame(levelId: number) {
   uni.navigateTo({
-    url: '/pages/menu/menu',
-    animationType: 'fade-in',
-    animationDuration: 600
+    url: `/pages/quiz/quiz?moduleId=${moduleId.value}&levelId=${levelId}`
   });
+}
+
+function menuBack() {
+  const pages = getCurrentPages();
+  if (pages.length > 1) {
+    uni.navigateBack();
+  } else {
+    uni.reLaunch({url: '/pages/home/home'});
+  }
 }
 </script>
 
+<template>
+  <image class="menu-back" src="@/assets/menu-back.svg" @click="menuBack"></image>
+  <view class="menu-background">
+    <view class="menu-title">
+      <text class="menu-title-jichu">基础</text>
+      <text class="menu-title-zhishi">知识</text>
+    </view>
+    <view class="quiz">
+      <text class="quiz-title">
+        第一/五题
+      </text>
+      <view class="quiz-btns">
+        <text>秦腔发源于中国哪个地区？</text>
+      </view>
+    </view>
+
+  </view>
+</template>
+
 <style>
-.launch-container {
+.menu-back {
+  width: 70rpx;
+  height: 70rpx;
+  position: absolute;
+  left: 40rpx;
+  top: 40rpx;
+}
+
+.menu-background {
   width: 100vw;
   height: 100vh;
-  position: relative;
-}
-
-.character-silhouette {
-  position: absolute;
-  width: 80%;
-  height: 60%;
-  top: 10%;
-  left: 10%;
-}
-
-.mirror-container {
-  position: absolute;
-  width: 100px;
-  height: 100px;
-  top: 30%;
-  right: 20%;
-}
-
-.mirror-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: orange;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-.start-btn {
-  position: absolute;
-  width: 244px;
-  height: 69px;
-  bottom: 20%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.btn-bg {
-  width: 100%;
-  height: 100%;
-}
-
-.btn-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 24px;
-}
-
-.corner-tag {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  bottom: 10px;
-  left: 10px;
-  background-color: orange;
+  background-image: url('@/assets/menu-background.png');
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
-  font-weight: bold;
 }
+
+.menu-title {
+  width: 140px;
+  font-size: 120rpx;
+  line-height: 0.8;
+  position: absolute;
+  left: calc(50% - 70px);
+  top: 5.5%;
+  line-height: 0.9;
+  display: flex;
+  flex-direction: column;
+  font-family: slidefu-regular;
+}
+
+.quiz {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.quiz-title {
+  font-size: 45rpx;
+  font-family: slidefu-regular;
+  color: #831A1F;
+}
+
+.quiz-btns {
+  width: 700rpx;
+  height: calc(700rpx * 403 / 361);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  background-image: url("@/assets/quiz-btns.png");
+  background-size: cover;
+}
+
 </style>

@@ -4,7 +4,7 @@ function startGame() {
     url: '/pages/home/home'
   });
 }
-// TODO 修改按钮图片
+// TODO 修改icon
 </script>
 
 <template>

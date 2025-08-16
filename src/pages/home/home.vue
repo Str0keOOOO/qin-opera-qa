@@ -1,25 +1,15 @@
 <script setup lang="ts">
-import qaData from '@/data/qa.json';
+import {useQaData} from "@/composable/useQaData";
 
-// TODO 改成接口获取一次就好了重复获取不好
+const {useModules} = useQaData();
 
-interface ModuleItem {
-  moduleId: number;
-  module: string;
-}
-
-const modules: ModuleItem[] = qaData.map(item => ({
-  moduleId: item.moduleId,
-  module: item.module
-}));
+const modules = useModules();
 
 function startGame(moduleId: number) {
   uni.navigateTo({
     url: `/pages/menu/menu?moduleId=${moduleId}`
   });
 }
-
-// TODO要修改params传参
 
 </script>
 

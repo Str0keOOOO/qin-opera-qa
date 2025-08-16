@@ -1,33 +1,15 @@
 <script setup lang="ts">
 import {ref} from 'vue';
 import {onLoad} from '@dcloudio/uni-app';
-import qaData from '@/data/qa.json';
+import {useQaData} from '@/composable/useQaData';
 
-interface Question {
-  question: string;
-  options: string[];
-  answer: number;
-}
-
-interface Level {
-  levelId: number;
-  levelName: string;
-  questions: Question[];
-}
-
-interface Module {
-  moduleId: number;
-  module: string;
-  levels: Level[];
-}
+const {useLevels} = useQaData();
 
 const moduleId = ref(0);
-const levels = ref<Level[]>([]);
+const levels = useLevels(moduleId);
 
 onLoad((options: any) => {
   moduleId.value = Number(options?.moduleId);
-  levels.value = (qaData as Module[]).find(m => m.moduleId === moduleId.value)?.levels;
-  console.log(levels.value);
 });
 
 function startGame(levelId: number) {
@@ -54,8 +36,8 @@ function menuBack() {
       <text class="menu-title-jichu">基础</text>
       <text class="menu-title-zhishi">知识</text>
     </view>
-    <view class="menu-btns" @click="startGame(levels[0].levelId)">
-      <view class="menu-btn">
+    <view class="quiz-btns">
+      <view class="menu-btn" @click="startGame(levels[0].levelId)">
         <text class="menu-text">{{ levels[0].levelName }}</text>
       </view>
       <view class="menu-btn" @click="startGame(levels[1].levelId)">
@@ -106,7 +88,7 @@ function menuBack() {
   font-family: slidefu-regular;
 }
 
-.menu-btns{
+.quiz-btns {
   width: 500rpx;
   height: 800rpx;
   display: flex;
@@ -114,7 +96,7 @@ function menuBack() {
   flex-direction: column;
 }
 
-.menu-btn{
+.menu-btn {
   width: 100%;
   height: 150rpx;
   background-image: url("@/assets/menu-btn.png");
@@ -124,7 +106,7 @@ function menuBack() {
   justify-content: center;
 }
 
-.menu-text{
+.menu-text {
   font-size: 40rpx;
   font-family: slidefu-regular;
   color: white;
