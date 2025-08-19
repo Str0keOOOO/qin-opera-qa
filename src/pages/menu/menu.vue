@@ -13,18 +13,14 @@ onLoad((options: any) => {
 });
 
 function startGame(levelId: number) {
+  // TODO传进来的应该是ref
   uni.navigateTo({
     url: `/pages/quiz/quiz?moduleId=${moduleId.value}&levelId=${levelId}`
   });
 }
 
 function menuBack() {
-  const pages = getCurrentPages();
-  if (pages.length > 1) {
-    uni.navigateBack();
-  } else {
-    uni.reLaunch({url: '/pages/home/home'});
-  }
+  uni.navigateTo({url: '/pages/home/home'});
 }
 </script>
 

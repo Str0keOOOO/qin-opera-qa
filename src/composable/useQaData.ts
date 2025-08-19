@@ -4,8 +4,7 @@ import type {
     Module,
     ModuleItem,
     Level,
-    Question,
-    QuestionWithoutAnswer
+    Question
 } from '@/types/qa';
 
 export function useQaData() {
@@ -24,27 +23,18 @@ export function useQaData() {
         });
     }
 
-    function getQuestions(moduleId: number, levelId: number): Question[] {
-        return getLevels(moduleId).find(l => l.levelId === levelId)?.questions ?? [];
-    }
-
-    function getQuizQuestions(moduleId: number, levelId: number): QuestionWithoutAnswer[] {
-        return getQuestions(moduleId, levelId).map(q => ({
-            question: q.question,
-            options: q.options
-        }));
-    }
-
-    function checkAnswer(question: Question, userChoice: 1 | 2 | 3 | 4) {
-        return question.answer === userChoice;
+    function useQuestions(moduleId: Ref<number>, levelId: Ref<number>) {
+        return computed<Question[]>(() => {
+            const mod = qaData.value.find(m => m.moduleId === moduleId.value);
+            const level = mod?.levels.find(l => l.levelId === levelId.value);
+            return level?.questions ?? [];
+        });
     }
 
     return {
         qaData,
         useModules,
         useLevels,
-        getQuestions,
-        getQuizQuestions,
-        checkAnswer
+        useQuestions
     };
 }
