@@ -3,23 +3,27 @@ import {ref, computed, watch, nextTick} from 'vue';
 import {onLoad} from '@dcloudio/uni-app';
 import {useQaData} from '@/composable/useQaData';
 import QuizBtn from '@/component/quizBtn.vue';
+import {useProgress} from '@/composable/useProgress';
 
-const {useQuestions} = useQaData();
+const {markLevelCompleted} = useProgress();
+
+// 引入需要的获取函数
+const {useQuestions, useLevels, useModules} = useQaData();
 
 const moduleId = ref(0);
 const levelId = ref(0);
+
 const questions = useQuestions(moduleId, levelId);
+const levels = useLevels(moduleId);          // 当前模块所有关卡
+const modules = useModules();                // 所有模块(用于跳到下一个模块)
 
 const currentIndex = ref(0);
 const selected = ref<number | null>(null);
 
 const resultPopup = ref();
-
-/* success=全部正确(最后一题且未错); fail=出现错误 */
 const popupType = ref<'success' | 'fail' | null>(null);
 
 const currentQuestion = computed(() => questions.value[currentIndex.value]);
-
 const progressText = computed(() =>
     questions.value.length ? `第${currentIndex.value + 1}/${questions.value.length}题` : ''
 );
@@ -38,19 +42,18 @@ function selectOption(i: number) {
   selected.value = i;
 
   const correct = (i + 1) === currentQuestion.value.answer;
-
   if (!correct) {
-    openPopup('fail'); // 一出错立即弹窗
+    openPopup('fail');
     return;
   }
 
-  // 全部答对: 当前是最后一题且没有出错
+  // 最后一题且正确 -> 记录关卡完成
   if (currentIndex.value === questions.value.length - 1) {
+    markLevelCompleted(moduleId.value, levelId.value);
     openPopup('success');
     return;
   }
 
-  // 正确且不是最后一题: 自动跳下一题(延迟给一点反馈时间, 可调)
   setTimeout(() => {
     currentIndex.value++;
     selected.value = null;
@@ -63,10 +66,29 @@ function restartQuiz() {
   });
 }
 
+// 修复: 跳转到下一关或下一模块第一关
 function nextQuiz() {
-  uni.navigateTo({
-    url: `/pages/quiz/quiz?moduleId=${moduleId.value}&levelId=${levelId.value + 1}`
-  });
+  const hasNextLevel = levels.value.some(l => l.levelId === levelId.value + 1);
+  if (hasNextLevel) {
+    uni.navigateTo({
+      url: `/pages/quiz/quiz?moduleId=${moduleId.value}&levelId=${levelId.value + 1}`
+    });
+    return;
+  }
+
+  // 计算下一模块
+  const sorted = [...modules.value].sort((a, b) => a.moduleId - b.moduleId);
+  const idx = sorted.findIndex(m => m.moduleId === moduleId.value);
+  const nextModule = sorted[idx + 1];
+
+  if (nextModule) {
+    uni.navigateTo({
+      url: `/pages/quiz/quiz?moduleId=${nextModule.moduleId}&levelId=1`
+    });
+  } else {
+    // 已是最后一个模块最后一关，可改成自定义结束页
+    uni.navigateTo({ url: '/pages/home/home' });
+  }
 }
 
 function menuBack() {
@@ -78,7 +100,6 @@ function menuBack() {
 function closeAndFinish() {
   resultPopup.value?.close();
   popupType.value = null;
-  // 返回或其它操作
 }
 
 onLoad((options: any) => {

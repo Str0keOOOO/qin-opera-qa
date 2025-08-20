@@ -1,34 +1,48 @@
 <script setup lang="ts">
-import {useQaData} from "@/composable/useQaData";
+import {computed} from 'vue';
+import {useQaData} from '@/composable/useQaData';
+import {useProgress} from '@/composable/useProgress';
 
 const {useModules} = useQaData();
+const {isModuleCompleted, completedModulesCount} = useProgress();
 
 const modules = useModules();
 
-function startGame(moduleId: number) {
-  uni.navigateTo({
-    url: `/pages/menu/menu?moduleId=${moduleId}`
-  });
+// 解锁规则: 第1模块默认解锁; 其它模块需前一个模块完成
+function isModuleUnlocked(id: number) {
+  if (id === 1) return true;
+  return isModuleCompleted(id - 1);
 }
 
+function startGame(moduleId: number, disabled: boolean) {
+  if (disabled) return;
+  uni.navigateTo({ url: `/pages/menu/menu?moduleId=${moduleId}` });
+}
+
+const totalModules = computed(() => Array.isArray(modules.value) ? modules.value.length : 0);
+
+const progressText = computed(() =>
+    `已完成 ${completedModulesCount.value} / ${totalModules.value}`
+);
 </script>
 
 <template>
+  <view class="home-progress">{{ progressText }}</view>
   <view class="home-background">
-    <view class="home-btn" id="home-btn-1" @click="startGame(modules[0].moduleId)">
-      <text class="home-text">{{ modules[0].module }}</text>
-    </view>
-    <view class="home-btn" id="home-btn-2" @click="startGame(modules[1].moduleId)">
-      <text class="home-text">{{ modules[1].module }}</text>
-    </view>
-    <view class="home-btn" id="home-btn-3" @click="startGame(modules[2].moduleId)">
-      <text class="home-text">{{ modules[2].module }}</text>
-    </view>
-    <view class="home-btn" id="home-btn-4" @click="startGame(modules[3].moduleId)">
-      <text class="home-text">{{ modules[3].module }}</text>
-    </view>
-    <view class="home-btn" id="home-btn-5" @click="startGame(modules[4].moduleId)">
-      <text class="home-text">{{ modules[4].module }}</text>
+    <view
+        v-for="m in modules"
+        :key="m.moduleId"
+        class="home-btn"
+        :class="[
+        'home-btn-dyn',
+        {
+          disabled: !isModuleUnlocked(m.moduleId),
+          completed: isModuleCompleted(m.moduleId)
+        }
+      ]"
+        @click="startGame(m.moduleId, !isModuleUnlocked(m.moduleId))"
+    >
+      <text class="home-text">{{ m.module }}</text>
     </view>
   </view>
 </template>
@@ -52,6 +66,26 @@ function startGame(moduleId: number) {
   position: absolute;
 }
 
+
+
+.home-btn-dyn.disabled {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.home-btn-dyn.completed {
+  box-shadow: 0 0 10rpx #ffd27f;
+}
+
+.home-progress {
+  position: absolute;
+  top: 4%;
+  left: 5%;
+  font-size: 40rpx;
+  color: #fff;
+  font-family: slidefu-regular;
+}
+
 .home-text {
   font-size: 35rpx;
   font-family: slidefu-regular;
@@ -60,28 +94,9 @@ function startGame(moduleId: number) {
   text-align: center;
 }
 
-#home-btn-1 {
-  top: 25%;
-  right: 20%;
-}
-
-#home-btn-2 {
-  top: 30%;
-  left: 25%;
-}
-
-#home-btn-3 {
-  top: 55%;
-  left: 30%;
-}
-
-#home-btn-4 {
-  top: 60%;
-  right: 15%;
-}
-
-#home-btn-5 {
-  top: 75%;
-  right: 30%;
-}
+.home-btn-dyn:nth-of-type(1) { top:25%; right:20%; }
+.home-btn-dyn:nth-of-type(2) { top:30%; left:25%; }
+.home-btn-dyn:nth-of-type(3) { top:55%; left:30%; }
+.home-btn-dyn:nth-of-type(4) { top:60%; right:15%; }
+.home-btn-dyn:nth-of-type(5) { top:75%; right:30%; }
 </style>

@@ -1,53 +1,74 @@
 <script setup lang="ts">
-import {ref} from 'vue';
+import {ref, computed, nextTick} from 'vue';
 import {onLoad} from '@dcloudio/uni-app';
 import {useQaData} from '@/composable/useQaData';
+import {useProgress} from '@/composable/useProgress';
 
 const {useLevels} = useQaData();
+const {isLevelCompleted} = useProgress();
 
-const moduleId = ref(0);
-const levels = useLevels(moduleId);
+const moduleId = ref<number>(0);
 
-onLoad((options: any) => {
-  moduleId.value = Number(options?.moduleId);
+// 原始关卡列表(可能为 ref 或 computed)
+const rawLevels = useLevels(moduleId);
+
+// 解锁规则: 第一关默认解锁; 其它关需前一关完成
+function isLevelUnlocked(levelId: number) {
+  if (levelId === 1) return true;
+  return isLevelCompleted(moduleId.value, levelId - 1);
+}
+
+// 过滤并保证数组安全
+const levelItems = computed(() => {
+  const arr = rawLevels?.value;
+  if (!Array.isArray(arr)) return [];
+  return arr.filter(l => l && typeof l.levelId === 'number');
 });
 
-function startGame(levelId: number) {
-  // TODO传进来的应该是ref
+function startGame(levelId: number, disabled: boolean) {
+  if (disabled) return;
   uni.navigateTo({
     url: `/pages/quiz/quiz?moduleId=${moduleId.value}&levelId=${levelId}`
   });
 }
 
 function menuBack() {
-  uni.navigateTo({url: '/pages/home/home'});
+  uni.navigateTo({ url: '/pages/home/home' });
 }
+
+onLoad((options: any) => {
+  moduleId.value = Number(options?.moduleId) || 0;
+  nextTick(() => {
+    console.log('menu onLoad moduleId=', moduleId.value, 'levels=', rawLevels?.value);
+  });
+});
 </script>
 
 <template>
-  <image class="menu-back" src="@/assets/menu-back.svg" @click="menuBack"></image>
-  <!--TODO 可能出现打包的问题  -->
+  <image class="menu-back" src="@/assets/menu-back.svg" @click="menuBack" />
   <view class="menu-background">
     <view class="menu-title">
-      <text class="menu-title-jichu">基础</text>
-      <text class="menu-title-zhishi">知识</text>
+      <text>基础</text>
+      <text>知识</text>
     </view>
-    <view class="quiz-btns">
-      <view class="menu-btn" @click="startGame(levels[0].levelId)">
-        <text class="menu-text">{{ levels[0].levelName }}</text>
+
+    <view v-if="levelItems.length" class="quiz-btns">
+      <view
+          v-for="l in levelItems"
+          :key="l.levelId"
+          class="menu-btn"
+          :class="{
+          disabled: !isLevelUnlocked(l.levelId),
+          completed: isLevelCompleted(moduleId, l.levelId)
+        }"
+          @click="startGame(l.levelId, !isLevelUnlocked(l.levelId))"
+      >
+        <text class="menu-text">{{ l.levelName }}</text>
       </view>
-      <view class="menu-btn" @click="startGame(levels[1].levelId)">
-        <text class="menu-text">{{ levels[1].levelName }}</text>
-      </view>
-      <view class="menu-btn" @click="startGame(levels[2].levelId)">
-        <text class="menu-text">{{ levels[2].levelName }}</text>
-      </view>
-      <view class="menu-btn" @click="startGame(levels[3].levelId)">
-        <text class="menu-text">{{ levels[3].levelName }}</text>
-      </view>
-      <view class="menu-btn" @click="startGame(levels[4].levelId)">
-        <text class="menu-text">{{ levels[4].levelName }}</text>
-      </view>
+    </view>
+
+    <view v-else style="color:#fff;font-size:32rpx;font-family:slidefu-regular;">
+      加载中...
     </view>
   </view>
 </template>
@@ -100,6 +121,15 @@ function menuBack() {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.menu-btn.disabled {
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.menu-btn.completed {
+  box-shadow: 0 0 12rpx #7fd4ff;
 }
 
 .menu-text {
