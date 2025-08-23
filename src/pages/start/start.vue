@@ -4,7 +4,6 @@ function startGame() {
     url: '/pages/home/home'
   });
 }
-// TODO 修改icon
 </script>
 
 <template>

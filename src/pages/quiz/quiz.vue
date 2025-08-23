@@ -6,16 +6,14 @@ import QuizBtn from '@/component/quizBtn.vue';
 import {useProgress} from '@/composable/useProgress';
 
 const {markLevelCompleted} = useProgress();
-
-// 引入需要的获取函数
 const {useQuestions, useLevels, useModules} = useQaData();
 
 const moduleId = ref(0);
 const levelId = ref(0);
 
 const questions = useQuestions(moduleId, levelId);
-const levels = useLevels(moduleId);          // 当前模块所有关卡
-const modules = useModules();                // 所有模块(用于跳到下一个模块)
+const levels = useLevels(moduleId);
+const modules = useModules()
 
 const currentIndex = ref(0);
 const selected = ref<number | null>(null);
@@ -57,7 +55,7 @@ function selectOption(i: number) {
   setTimeout(() => {
     currentIndex.value++;
     selected.value = null;
-  }, 400);
+  }, 200);
 }
 
 function restartQuiz() {
@@ -66,7 +64,6 @@ function restartQuiz() {
   });
 }
 
-// 修复: 跳转到下一关或下一模块第一关
 function nextQuiz() {
   const hasNextLevel = levels.value.some(l => l.levelId === levelId.value + 1);
   if (hasNextLevel) {
@@ -76,7 +73,6 @@ function nextQuiz() {
     return;
   }
 
-  // 计算下一模块
   const sorted = [...modules.value].sort((a, b) => a.moduleId - b.moduleId);
   const idx = sorted.findIndex(m => m.moduleId === moduleId.value);
   const nextModule = sorted[idx + 1];
@@ -86,7 +82,6 @@ function nextQuiz() {
       url: `/pages/quiz/quiz?moduleId=${nextModule.moduleId}&levelId=1`
     });
   } else {
-    // 已是最后一个模块最后一关，可改成自定义结束页
     uni.navigateTo({ url: '/pages/home/home' });
   }
 }
@@ -97,17 +92,9 @@ function menuBack() {
   });
 }
 
-function closeAndFinish() {
-  resultPopup.value?.close();
-  popupType.value = null;
-}
-
 onLoad((options: any) => {
   moduleId.value = Number(options?.moduleId) || 0;
   levelId.value = Number(options?.levelId) || 0;
-  nextTick(() => {
-    console.log('loaded questions:', questions.value);
-  });
 });
 
 watch(questions, () => {
@@ -141,9 +128,7 @@ watch(questions, () => {
           {{ opt }}
         </quiz-btn>
 
-        <!-- 结果弹窗 -->
         <uni-popup ref="resultPopup" type="center" :mask-click="false">
-          <!-- 成功弹窗 -->
           <view v-if="isSuccess" class="result-popup">
             <text class="result-title">恭喜你，全部正确</text>
             <view class="result-actions">
@@ -152,7 +137,6 @@ watch(questions, () => {
             </view>
           </view>
 
-          <!-- 失败弹窗 -->
           <view v-else-if="isFail" class="result-popup">
             <text class="result-title">很遗憾，出错了</text>
             <view class="result-actions">
@@ -188,7 +172,6 @@ watch(questions, () => {
 .menu-title {
   width: 140px;
   font-size: 120rpx;
-  line-height: 0.8;
   position: absolute;
   left: calc(50% - 70px);
   top: 5.5%;
@@ -223,14 +206,15 @@ watch(questions, () => {
   background-image: url("@/assets/quiz-btns.png");
   background-size: cover;
   font-family: slidefu-regular;
-  font-size: 25px;
+  font-size: 45rpx;
 }
 
 .quiz-btn {
   width: 300rpx;
-  height: calc(300rpx * 47 / 166);
+  height: calc(300rpx * 55 / 174);
   color: white;
   font-size: 40rpx;
+  line-height: 0.8;
   font-family: slidefu-regular;
 }
 

@@ -1,7 +1,7 @@
 [
   {
     "moduleId": 1,
-    "module": "一·基础知识",
+    "moduleName": "一·基础知识",
     "levels": [
       {
         "levelId": 1,
@@ -287,7 +287,7 @@
   },
   {
     "moduleId": 2,
-    "module": "二·经典剧目",
+    "moduleName": "二·经典剧目",
     "levels": [
       {
         "levelId": 1,
@@ -573,7 +573,7 @@
   },
   {
     "moduleId": 3,
-    "module": "三·音乐唱腔",
+    "moduleName": "三·音乐唱腔",
     "levels": [
       {
         "levelId": 1,
@@ -859,7 +859,7 @@
   },
   {
     "moduleId": 4,
-    "module": "四·名家名派",
+    "moduleName": "四·名家名派",
     "levels": [
       {
         "levelId": 1,
@@ -1145,7 +1145,7 @@
   },
   {
     "moduleId": 5,
-    "module": "五·文化传承",
+    "moduleName": "五·文化传承",
     "levels": [
       {
         "levelId": 1,

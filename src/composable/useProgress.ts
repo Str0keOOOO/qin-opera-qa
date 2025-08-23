@@ -1,13 +1,9 @@
-// src/composable/useProgress.ts
 import {ref, computed} from 'vue';
 import type {QaData} from '@/types/qa';
-// 请按实际路径引入题库数据（需包含 modules->levels->levelId）
-// 若已有 useQaData 能返回完整数据，可替换为对应调用。
-import qaData from '@/data/qa.json'; // 调整路径
+import qaData from '@/data/qa.json';
 
-type ProgressStore = Record<number, number[]>; // moduleId -> 已完成 levelId 列表（去重）
-
-const STORAGE_KEY = 'qa_progress_v1';
+type ProgressStore = Record<number, number[]>;
+const STORAGE_KEY = 'qa_progress';
 
 function loadStore(): ProgressStore {
     try {
@@ -25,8 +21,6 @@ function saveStore(store: ProgressStore) {
 }
 
 const storeRef = ref<ProgressStore>(loadStore());
-
-// 预计算模块 -> 关卡 ID 列表
 const moduleLevelMap: Record<number, number[]> = {};
 (qaData as QaData).forEach(m => {
     moduleLevelMap[m.moduleId] = m.levels.map(l => l.levelId);
@@ -45,19 +39,30 @@ export function useProgress() {
         }
     }
 
-    function isLevelCompleted(moduleId: number, levelId: number) {
-        return (storeRef.value[moduleId] || []).includes(levelId);
-    }
-
     function completedLevelIds(moduleId: number) {
         return storeRef.value[moduleId] || [];
+    }
+
+    function isLevelCompleted(moduleId: number, levelId: number) {
+        return completedLevelIds(moduleId).includes(levelId);
+    }
+
+    function isLevelUnlocked(moduleId: number, levelId: number) {
+        if (levelId === 1) return true;
+        if (levelId <= 0) return false;
+        return isLevelCompleted(moduleId, levelId - 1);
     }
 
     function isModuleCompleted(moduleId: number) {
         const all = moduleLevelMap[moduleId] || [];
         if (!all.length) return false;
-        const done = storeRef.value[moduleId] || [];
+        const done = completedLevelIds(moduleId);
         return all.every(id => done.includes(id));
+    }
+
+    function isModuleUnlocked(moduleId: number) {
+        if (moduleId === 1) return true;
+        return isModuleCompleted(moduleId - 1);
     }
 
     const completedModulesCount = computed(() =>
@@ -66,23 +71,13 @@ export function useProgress() {
             .filter(id => isModuleCompleted(id)).length
     );
 
-    function resetAll() {
-        storeRef.value = {};
-        persist();
-    }
-
-    function reload() {
-        storeRef.value = loadStore();
-    }
-
     return {
         markLevelCompleted,
         isLevelCompleted,
-        completedLevelIds,
+        isLevelUnlocked,
         isModuleCompleted,
+        isModuleUnlocked,
         completedModulesCount,
-        resetAll,
-        reload,
         store: storeRef
     };
 }

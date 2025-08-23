@@ -3,7 +3,7 @@ import raw from '@/data/qa.json';
 import type {
     Module,
     ModuleItem,
-    Level,
+    LevelItem,
     Question
 } from '@/types/qa';
 
@@ -12,14 +12,19 @@ export function useQaData() {
 
     function useModules() {
         return computed<ModuleItem[]>(() =>
-            qaData.value.map(m => ({moduleId: m.moduleId, module: m.module}))
+            qaData.value.map(m => ({moduleId: m.moduleId, moduleName: m.moduleName}))
         );
     }
 
     function useLevels(moduleId: Ref<number>) {
-        return computed<Level[]>(() => {
+        return computed<LevelItem[]>(() => {
             const mod = qaData.value.find(m => m.moduleId === moduleId.value);
-            return mod?.levels ?? [];
+            return mod
+                ? mod.levels.map(l => ({
+                    levelId: l.levelId,
+                    levelName: l.levelName
+                }))
+                : [];
         });
     }
 

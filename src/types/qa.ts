@@ -4,7 +4,7 @@ export type QaData = Module[];
 // 模块
 export interface Module {
     moduleId: number;
-    module: string;        // 模块名称（含序号与标题）
+    moduleName: string;        // 模块名称（含序号与标题）
     levels: Level[];
 }
 
@@ -23,6 +23,5 @@ export interface Question {
 }
 
 // 派生便捷类型
-export type ModuleItem = Pick<Module, 'moduleId' | 'module'>;
+export type ModuleItem = Pick<Module, 'moduleId' | 'moduleName'>;
 export type LevelItem = Pick<Level, 'levelId' | 'levelName'>;
-export type QuestionWithoutAnswer = Omit<Question, 'answer'>;

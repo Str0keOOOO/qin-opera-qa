@@ -15,11 +15,6 @@ const classes = computed(() => ({
       class="quiz-btn"
       :class="classes"
   >
-    <image
-        src="@/assets/quiz-btn-border.png"
-        class="quiz-btn-border"
-    />
-    <!--TODO 修改成after并且修改一下逻辑需要-->
     <slot/>
   </button>
 </template>
@@ -29,23 +24,23 @@ const classes = computed(() => ({
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #BA1F4C;
+  background-image: url("@/assets/quiz-btn.png");
+  background-size: cover;
   border-radius: 0;
   color: white;
 }
 
 .quiz-btn.correct:active {
-  background-color: #23DEA0;
+  background-image: url("@/assets/quiz-btn-correct.png");
 }
 
 .quiz-btn.wrong:active {
-  background-color: #FF0000;
+  background-image: url("@/assets/quiz-btn-wrong.png");
 }
 
-.quiz-btn-border{
+.quiz-btn-border {
   width: 100%;
   height: 100%;
   position: absolute;
 }
 </style>
-<!--TODO如果后面闲的没事干可以把所有按钮都调一下这样可以增加复用度-->
