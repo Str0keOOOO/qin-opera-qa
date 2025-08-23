@@ -1,36 +1,36 @@
 <script setup lang="ts">
-import {computed} from 'vue';
-import {useQaData} from '@/composable/useQaData';
-import {useProgress} from '@/composable/useProgress';
-import HomeBtn from '@/component/homeBtn.vue';
+import { computed } from 'vue'
+import { useQaData } from '@/composable/useQaData'
+import { useProgress } from '@/composable/useProgress'
+import HomeBtn from '@/component/homeBtn.vue'
 
-const {useModules} = useQaData();
-const {isModuleCompleted, isModuleUnlocked, completedModulesCount} = useProgress();
+import homeBg from '@/assets/home-background.png'
+import homeProgressBar from '@/assets/home-progress-bar.png'
 
-const modules = useModules();
+const { useModules } = useQaData()
+const { isModuleCompleted, isModuleUnlocked, completedModulesCount } = useProgress()
+
+const modules = useModules()
 
 function startGame(moduleId: number) {
-  if (!isModuleUnlocked(moduleId)) return;
-  uni.navigateTo({url: `/pages/menu/menu?moduleId=${moduleId}`});
+  if (!isModuleUnlocked(moduleId)) return
+  uni.navigateTo({ url: `/pages/menu/menu?moduleId=${moduleId}` })
 }
 
-const totalModules = computed(() =>
-    Array.isArray(modules.value) ? modules.value.length : 0
-);
-
-const progressText = computed(
-    () => `已完成${completedModulesCount.value}/${totalModules.value}`
-);
+const totalModules = computed(() => Array.isArray(modules.value) ? modules.value.length : 0)
+const progressText = computed(() => `已完成${completedModulesCount.value}/${totalModules.value}`)
 </script>
 
 <template>
   <view class="home-progress">
     <text class="home-progress-text">{{ progressText }}</text>
-    <image class="home-progress-bar" src="@/assets/home-progress-bar.png"></image>
+    <image class="home-progress-bar" :src="homeProgressBar" />
   </view>
 
-
-  <view class="home-background">
+  <view
+    class="home-background"
+    :style="{ '--home-background-img': `url(${homeBg})` }"
+  >
     <home-btn
         v-for="m in modules"
         :key="m.moduleId"
@@ -44,14 +44,13 @@ const progressText = computed(
   </view>
 </template>
 
-<style>
+<style scoped>
 .home-background {
   width: 100vw;
   height: 100vh;
-  background-image: url('@/assets/home-background.png');
   background-size: cover;
+  background-image: var(--home-background-img);
 }
-
 .home-progress {
   position: absolute;
   top: 2%;
@@ -62,18 +61,15 @@ const progressText = computed(
   align-items: center;
   justify-content: center;
 }
-
 .home-progress-text {
   font-size: 40rpx;
   color: #fff;
   font-family: slidefu-regular;
 }
-
 .home-progress-bar {
   width: 280rpx;
   height: calc(280rpx * 13 / 140);
 }
-
 .home-text {
   font-size: 35rpx;
   font-family: slidefu-regular;
@@ -81,29 +77,9 @@ const progressText = computed(
   text-orientation: upright;
   text-align: center;
 }
-
-.home-btn:nth-of-type(1) {
-  top: 25%;
-  right: 20%;
-}
-
-.home-btn:nth-of-type(2) {
-  top: 30%;
-  left: 25%;
-}
-
-.home-btn:nth-of-type(3) {
-  top: 55%;
-  left: 30%;
-}
-
-.home-btn:nth-of-type(4) {
-  top: 60%;
-  right: 15%;
-}
-
-.home-btn:nth-of-type(5) {
-  top: 75%;
-  right: 30%;
-}
+.home-btn:nth-of-type(1) { top: 25%; right: 20%; position: absolute; }
+.home-btn:nth-of-type(2) { top: 30%; left: 25%; position: absolute; }
+.home-btn:nth-of-type(3) { top: 55%; left: 30%; position: absolute; }
+.home-btn:nth-of-type(4) { top: 60%; right: 15%; position: absolute; }
+.home-btn:nth-of-type(5) { top: 75%; right: 30%; position: absolute; }
 </style>

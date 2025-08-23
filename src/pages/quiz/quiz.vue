@@ -4,6 +4,10 @@ import {onLoad} from '@dcloudio/uni-app';
 import {useQaData} from '@/composable/useQaData';
 import QuizBtn from '@/component/quizBtn.vue';
 import {useProgress} from '@/composable/useProgress';
+import menuBackImg from '@/assets/menu-back.svg'
+import menuBackground from '@/assets/menu-background.png'
+import quizBtnsImg from '@/assets/quiz-btns.png'
+import menuBtnImg from '@/assets/menu-btn.png'
 
 const {markLevelCompleted} = useProgress();
 const {useQuestions, useLevels, useModules} = useQaData();
@@ -86,7 +90,7 @@ function nextQuiz() {
   }
 }
 
-function menuBack() {
+function goBack() {
   uni.navigateTo({
     url: `/pages/menu/menu?moduleId=${moduleId.value}`
   });
@@ -105,8 +109,14 @@ watch(questions, () => {
 </script>
 
 <template>
-  <image class="menu-back" src="@/assets/menu-back.svg" @click="menuBack"></image>
-  <view class="menu-background">
+  <image class="menu-back" :src="menuBackImg" @click="goBack"></image>
+  <view
+    class="menu-background"
+    :style="{
+      '--menu-background-img': `url(${menuBackground})`,
+      '--result-btn-img': `url(${menuBtnImg})`
+    }"
+  >
     <view class="menu-title">
       <text class="menu-title-jichu">基础</text>
       <text class="menu-title-zhishi">知识</text>
@@ -115,7 +125,11 @@ watch(questions, () => {
     <view class="quiz" v-if="currentQuestion">
       <text class="quiz-title">{{ progressText }}</text>
 
-      <view class="quiz-btns">
+      <view
+        class="quiz-btns"
+        v-if="currentQuestion"
+        :style="{ '--quiz-btns-img': `url(${quizBtnsImg})` }"
+      >
         <text>{{ currentQuestion.question }}</text>
 
         <quiz-btn
@@ -132,7 +146,7 @@ watch(questions, () => {
           <view v-if="isSuccess" class="result-popup">
             <text class="result-title">恭喜你，全部正确</text>
             <view class="result-actions">
-              <button class="result-btn" @click="menuBack">返回目录</button>
+              <button class="result-btn" @click="goBack">返回目录</button>
               <button class="result-btn" @click="nextQuiz">下一题</button>
             </view>
           </view>
@@ -140,7 +154,7 @@ watch(questions, () => {
           <view v-else-if="isFail" class="result-popup">
             <text class="result-title">很遗憾，出错了</text>
             <view class="result-actions">
-              <button class="result-btn" @click="menuBack">返回目录</button>
+              <button class="result-btn" @click="goBack">返回目录</button>
               <button class="result-btn" @click="restartQuiz">重新开始</button>
             </view>
           </view>
@@ -162,7 +176,7 @@ watch(questions, () => {
 .menu-background {
   width: 100vw;
   height: 100vh;
-  background-image: url('@/assets/menu-background.png');
+  background-image: var(--menu-background-img);
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -203,7 +217,7 @@ watch(questions, () => {
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  background-image: url("@/assets/quiz-btns.png");
+  background-image: var(--quiz-btns-img);
   background-size: cover;
   font-family: slidefu-regular;
   font-size: 45rpx;
@@ -242,7 +256,7 @@ watch(questions, () => {
 .result-btn {
   width: 260rpx;
   height: calc(260rpx * 35 / 122);
-  background-image: url("@/assets/menu-btn.png");
+  background-image: var(--result-btn-img);
   background-size: cover;
   color: white;
   display: flex;

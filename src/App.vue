@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
+import {onLaunch, onShow, onHide} from "@dcloudio/uni-app";
+
 onLaunch(() => {
   console.log("App Launch");
 });
@@ -13,6 +14,6 @@ onHide(() => {
 <style>
 @font-face {
   font-family: 'slidefu-regular';
-  src: url('@/static/slidefu-regular.ttf');
+  src: url('@/static/slidefu-regular.ttf') format('truetype');
 }
 </style>

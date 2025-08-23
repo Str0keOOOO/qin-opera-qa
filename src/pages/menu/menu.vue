@@ -4,6 +4,10 @@ import {onLoad} from '@dcloudio/uni-app';
 import {useQaData} from '@/composable/useQaData';
 import {useProgress} from '@/composable/useProgress';
 import MenuBtn from '@/component/menuBtn.vue';
+import menuBackground from '@/assets/menu-background.png'
+import menuBackImg from '@/assets/menu-back.svg';
+
+
 
 const {useLevels} = useQaData();
 const {isLevelCompleted, isLevelUnlocked} = useProgress();
@@ -18,7 +22,7 @@ function startGame(levelId: number, disabled: boolean) {
   });
 }
 
-function menuBack() {
+function goBack() {
   uni.navigateTo({url: '/pages/home/home'});
 }
 
@@ -28,8 +32,11 @@ onLoad((options: any) => {
 </script>
 
 <template>
-  <image class="menu-back" src="@/assets/menu-back.svg" @click="menuBack"/>
-  <view class="menu-background">
+  <image class="menu-back" :src="menuBackImg" @click="goBack"/>
+  <view
+    class="menu-background"
+    :style="{ '--menu-background-img': `url(${menuBackground})` }"
+  >
     <view class="menu-title">
       <text>基础</text>
       <text>知识</text>
@@ -61,7 +68,7 @@ onLoad((options: any) => {
 .menu-background {
   width: 100vw;
   height: 100vh;
-  background-image: url('@/assets/menu-background.png');
+  background-image: var(--menu-background-img);
   background-size: cover;
   display: flex;
   justify-content: center;

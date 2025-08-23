@@ -1,22 +1,37 @@
 <script setup lang="ts">
 import {computed} from 'vue';
+import menuBtnImg from '@/assets/menu-btn.png';
+import menuBtnLockedImg from '@/assets/menu-btn-locked.png';
+
 
 const props = defineProps<{
   isUnlocked: boolean;
   isCompleted: boolean;
 }>();
 
+const emit = defineEmits(['click'])
+
 const classes = computed(() => ({
   disabled: !props.isUnlocked,
   completed: props.isCompleted,
   progressing: props.isUnlocked && !props.isCompleted
 }));
+
+function handleClick() {
+  if (!props.isUnlocked) return
+  emit('click')
+}
 </script>
 
 <template>
   <view
-      class="menu-btn"
-      :class="classes"
+    class="menu-btn"
+    :class="classes"
+    :style="{
+      '--menu-btn-img': `url(${menuBtnImg})`,
+      '--menu-btn-locked-img': `url(${menuBtnLockedImg})`
+    }"
+    @click="handleClick"
   >
     <slot/>
   </view>
@@ -34,12 +49,12 @@ const classes = computed(() => ({
 
 .menu-btn.disabled {
   opacity: 0.3;
-  background-image: url("@/assets/menu-btn-locked.png");
+  background-image: var(--menu-btn-locked-img);
 }
 
 .menu-btn.progressing, .menu-btn.completed {
   opacity: 1;
-  background-image: url("@/assets/menu-btn.png");
+  background-image: var(--menu-btn-img);
 }
 
 </style>
