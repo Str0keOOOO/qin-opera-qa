@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import {computed} from 'vue'
-import quizBtnImg from '@/assets/quiz-btn.png'
-import quizBtnCorrectImg from '@/assets/quiz-btn-correct.png'
-import quizBtnWrongImg from '@/assets/quiz-btn-wrong.png'
+// import quizBtnImg from '@/assets/quiz-btn.png'
+// import quizBtnCorrectImg from '@/assets/quiz-btn-correct.png'
+// import quizBtnWrongImg from '@/assets/quiz-btn-wrong.png'
+import imagePaths from '@/assets/imagePaths'
+
+const quizBtnImg = imagePaths.quizButtonImg;
+const quizBtnCorrectImg = imagePaths.quizBtnCorrect;
+const quizBtnWrongImg = imagePaths.quizBtnWrong;
 
 const props = defineProps<{ isCorrect: boolean }>();
 

@@ -4,9 +4,13 @@ import {onLoad} from '@dcloudio/uni-app';
 import {useQaData} from '@/composable/useQaData';
 import {useProgress} from '@/composable/useProgress';
 import MenuBtn from '@/component/menuBtn.vue';
-import menuBackground from '@/assets/menu-background.png'
-import menuBackImg from '@/assets/menu-back.svg';
 
+
+// import menuBackground from '@/assets/menu-background.png'
+import menuBackImg from '@/assets/menu-back.svg';
+import imagePaths from '@/assets/imagePaths'
+
+const menuBackground = imagePaths.menuBackground
 
 
 const {useLevels} = useQaData();

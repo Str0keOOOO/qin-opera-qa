@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import {computed} from 'vue';
-import menuBtnImg from '@/assets/menu-btn.png';
-import menuBtnLockedImg from '@/assets/menu-btn-locked.png';
+// import menuBtnImg from '@/assets/menu-btn.png';
+// import menuBtnLockedImg from '@/assets/menu-btn-locked.png';
+import imagePaths from '@/assets/imagePaths';
+
+const menuBtnImg = imagePaths.menuButtonImg
+const menuBtnLockedImg = imagePaths.menuBtnLocked
 
 
 const props = defineProps<{

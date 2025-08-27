@@ -3,9 +3,13 @@ import { computed } from 'vue'
 import { useQaData } from '@/composable/useQaData'
 import { useProgress } from '@/composable/useProgress'
 import HomeBtn from '@/component/homeBtn.vue'
+import imagePaths from '@/assets/imagePaths'
 
-import homeBg from '@/assets/home-background.png'
-import homeProgressBar from '@/assets/home-progress-bar.png'
+// import homeBg from '@/assets/home-background.png'
+// import homeProgressBar from '@/assets/home-progress-bar.png'
+
+const homeBg = imagePaths.homeBackground
+const homeProgressBar = imagePaths.homeProgressBar
 
 const { useModules } = useQaData()
 const { isModuleCompleted, isModuleUnlocked, completedModulesCount } = useProgress()

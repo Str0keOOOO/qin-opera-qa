@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import homeBtnImg from '@/assets/home-btn.png'
-import homeBtnLockImg from '@/assets/home-btn-lock.png'
+// import homeBtnImg from '@/assets/home-btn.png'
+// import homeBtnLockImg from '@/assets/home-btn-lock.png'
+import imagePaths from '@/assets/imagePaths'
+
+const homeBtnImg = imagePaths.homeBtn;
+const homeBtnLockImg = imagePaths.homeBtnLock
+
 
 const props = defineProps<{
   isUnlocked: boolean;

@@ -4,10 +4,17 @@ import {onLoad} from '@dcloudio/uni-app';
 import {useQaData} from '@/composable/useQaData';
 import QuizBtn from '@/component/quizBtn.vue';
 import {useProgress} from '@/composable/useProgress';
+
+
 import menuBackImg from '@/assets/menu-back.svg'
-import menuBackground from '@/assets/menu-background.png'
-import quizBtnsImg from '@/assets/quiz-btns.png'
-import menuBtnImg from '@/assets/menu-btn.png'
+// import menuBackground from '@/assets/menu-background.png'
+// import quizBtnsImg from '@/assets/quiz-btns.png'
+// import menuBtnImg from '@/assets/menu-btn.png'
+import imagePaths from '@/assets/imagePaths';
+
+const menuBackground = imagePaths.menuBackground;
+const quizBtnsImg = imagePaths.quizButtonImg;
+const menuBtnImg = imagePaths.menuButtonImg
 
 const {markLevelCompleted} = useProgress();
 const {useQuestions, useLevels, useModules} = useQaData();

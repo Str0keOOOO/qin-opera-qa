@@ -1,44 +1,45 @@
 {
-	"easycom": {
-		"autoscan": true,
-		"custom": {
-			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
-		}
-	},
-	"pages": [
-		{
-			"path": "pages/start/start",
-			"style": {
-				"navigationBarTitleText": "开始页",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/home/home",
-			"style": {
-				"navigationBarTitleText": "首页",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/menu/menu",
-			"style": {
-				"navigationBarTitleText": "目录页",
-				"navigationStyle": "custom"
-			}
-		},
-		{
-			"path": "pages/quiz/quiz",
-			"style": {
-				"navigationBarTitleText": "答题页",
-				"navigationStyle": "custom"
-			}
-		}
-	],
-	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
-	}
+  "pages": [
+    {
+      "path": "pages/start/start",
+      "style": {
+        "navigationBarTitleText": "Start"
+      }
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "pages/home",
+      "pages": [
+        {
+          "path": "home",
+          "style": {
+            "navigationBarTitleText": "Home"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/menu",
+      "pages": [
+        {
+          "path": "menu",
+          "style": {
+            "navigationBarTitleText": "Menu"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/quiz",
+      "pages": [
+        {
+          "path": "quiz",
+          "style": {
+            "navigationBarTitleText": "Quiz"
+          }
+        }
+      ]
+    }
+  ]
 }

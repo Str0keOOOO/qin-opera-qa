@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import startBg from '@/assets/start-background.png'
-import startBtnImg from '@/assets/start-btn.png'
+// import startBg from '@/assets/start-background.png'
+// import startBtnImg from '@/assets/start-btn.png'
+import imagePaths from '@/assets/imagePaths';
+
+const startBg = imagePaths.startBackground;
+const startBtnImg = imagePaths.startButton;
 
 function startGame() {
   uni.navigateTo({url: '/pages/home/home'})
