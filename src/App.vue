@@ -12,8 +12,4 @@ onHide(() => {
 });
 </script>
 <style>
-@font-face {
-  font-family: 'slidefu-regular';
-  src: url('@/static/slidefu-regular.ttf') format('truetype');
-}
 </style>

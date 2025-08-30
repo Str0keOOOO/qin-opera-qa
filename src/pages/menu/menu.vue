@@ -3,10 +3,7 @@ import {ref} from 'vue';
 import {onLoad} from '@dcloudio/uni-app';
 import {useQaData} from '@/composable/useQaData';
 import {useProgress} from '@/composable/useProgress';
-import MenuBtn from '@/component/menuBtn.vue';
-import menuBackground from '@/assets/menu-background.png'
-import menuBackImg from '@/assets/menu-back.svg';
-
+import menuBtn from '@/component/menuBtn.vue';
 
 
 const {useLevels} = useQaData();
@@ -32,17 +29,16 @@ onLoad((options: any) => {
 </script>
 
 <template>
-  <image class="menu-back" :src="menuBackImg" @click="goBack"/>
+  <image class="menu-back" src="@/static/images/menu-back.svg" @click="goBack"/>
   <view
     class="menu-background"
-    :style="{ '--menu-background-img': `url(${menuBackground})` }"
   >
     <view class="menu-title">
       <text>基础</text>
       <text>知识</text>
     </view>
 
-    <view v-if="levelItems.length" class="quiz-btns">
+    <view v-if="levelItems.length" class="menu-btns">
       <menu-btn
           v-for="l in levelItems"
           :key="l.levelId"
@@ -68,7 +64,7 @@ onLoad((options: any) => {
 .menu-background {
   width: 100vw;
   height: 100vh;
-  background-image: var(--menu-background-img);
+  background-image: url("@/static/images/menu-background.png");
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -87,7 +83,7 @@ onLoad((options: any) => {
   font-family: slidefu-regular;
 }
 
-.quiz-btns {
+.menu-btns {
   width: 500rpx;
   height: 800rpx;
   display: flex;

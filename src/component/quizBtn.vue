@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import {computed} from 'vue'
-import quizBtnImg from '@/assets/quiz-btn.png'
-import quizBtnCorrectImg from '@/assets/quiz-btn-correct.png'
-import quizBtnWrongImg from '@/assets/quiz-btn-wrong.png'
 
 const props = defineProps<{ isCorrect: boolean }>();
 
@@ -23,11 +20,6 @@ function handleClick() {
       type="button"
       class="quiz-btn"
       :class="classes"
-      :style="{
-        '--quiz-btn-img': `url(${quizBtnImg})`,
-        '--quiz-btn-correct-img': `url(${quizBtnCorrectImg})`,
-        '--quiz-btn-wrong-img': `url(${quizBtnWrongImg})`
-      }"
       @click="handleClick"
   >
     <slot/>
@@ -39,18 +31,18 @@ function handleClick() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: var(--quiz-btn-img);
+  background-image: url("@/static/images/quiz-btn.png");
   background-size: cover;
   border-radius: 0;
   color: white;
 }
 
 .quiz-btn.correct:active {
-  background-image: var(--quiz-btn-correct-img);
+  background-image: url("@/static/images/quiz-btn-correct.png");
 }
 
 .quiz-btn.wrong:active {
-  background-image: var(--quiz-btn-wrong-img);
+  background-image: url("@/static/images/quiz-btn-wrong.png");
 }
 
 .quiz-btn-border {

@@ -4,8 +4,6 @@ import { useQaData } from '@/composable/useQaData'
 import { useProgress } from '@/composable/useProgress'
 import HomeBtn from '@/component/homeBtn.vue'
 
-import homeBg from '@/assets/home-background.png'
-import homeProgressBar from '@/assets/home-progress-bar.png'
 
 const { useModules } = useQaData()
 const { isModuleCompleted, isModuleUnlocked, completedModulesCount } = useProgress()
@@ -24,12 +22,11 @@ const progressText = computed(() => `已完成${completedModulesCount.value}/${t
 <template>
   <view class="home-progress">
     <text class="home-progress-text">{{ progressText }}</text>
-    <image class="home-progress-bar" :src="homeProgressBar" />
+    <image class="home-progress-bar" src="@/static/images/home-progress-bar.png" />
   </view>
 
   <view
     class="home-background"
-    :style="{ '--home-background-img': `url(${homeBg})` }"
   >
     <home-btn
         v-for="m in modules"
@@ -49,7 +46,7 @@ const progressText = computed(() => `已完成${completedModulesCount.value}/${t
   width: 100vw;
   height: 100vh;
   background-size: cover;
-  background-image: var(--home-background-img);
+  background-image: url("@/static/images/home-background.png");
 }
 .home-progress {
   position: absolute;
@@ -77,6 +74,12 @@ const progressText = computed(() => `已完成${completedModulesCount.value}/${t
   text-orientation: upright;
   text-align: center;
 }
+
+.home-btn {
+  width: 80rpx;
+  height: calc(80rpx * 145 / 39);
+}
+
 .home-btn:nth-of-type(1) { top: 25%; right: 20%; position: absolute; }
 .home-btn:nth-of-type(2) { top: 30%; left: 25%; position: absolute; }
 .home-btn:nth-of-type(3) { top: 55%; left: 30%; position: absolute; }

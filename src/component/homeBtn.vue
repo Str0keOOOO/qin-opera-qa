@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import homeBtnImg from '@/assets/home-btn.png'
-import homeBtnLockImg from '@/assets/home-btn-lock.png'
+import {computed} from 'vue'
 
 const props = defineProps<{
   isUnlocked: boolean;
@@ -26,21 +24,15 @@ function handleClick() {
   <view
       class="home-btn"
       :class="classes"
-      :style="{
-      '--home-btn-img': `url(${homeBtnImg})`,
-      '--home-btn-lock-img': `url(${homeBtnLockImg})`
-    }"
       @click="handleClick"
   >
-    <slot />
+    <slot/>
   </view>
 </template>
 
 <style scoped>
 .home-btn {
-  width: 80rpx;
-  height: calc(80rpx * 147 / 41);
-  background-image: var(--home-btn-img);
+  background-image: url("@/static/images/home-btn.png");
   background-size: cover;
   display: flex;
   align-items: center;
@@ -57,7 +49,7 @@ function handleClick() {
   width: 100%;
   height: 100%;
   position: absolute;
-  background-image: var(--home-btn-lock-img);
+  background-image: url("@/static/images/home-btn-lock.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -68,5 +60,5 @@ function handleClick() {
   color: black;
 }
 </style>
-    <script setup lang="ts">
-    </script>
+<script setup lang="ts">
+</script>

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import startBg from '@/assets/start-background.png'
-import startBtnImg from '@/assets/start-btn.png'
 
 function startGame() {
   uni.navigateTo({url: '/pages/home/home'})
@@ -10,7 +8,6 @@ function startGame() {
 <template>
   <view
       class="start-background"
-      :style="{ '--start-background-img': `url(${startBg})` }"
   >
     <view class="start-title">
       <text class="start-title-qin">秦</text>
@@ -20,7 +17,6 @@ function startGame() {
     </view>
     <view
         class="start-btn"
-        :style="{ '--start-btn-img': `url(${startBtnImg})` }"
         @click="startGame"
     >
       <text class="start-text">开始游戏</text>
@@ -35,19 +31,19 @@ function startGame() {
   background-size: cover;
   display: flex;
   justify-content: center;
-  background-image: var(--start-background-img);
+  background-image: url("@/static/images/start-background.png");
 }
 
 .start-btn {
   width: 480rpx;
-  height: calc(480rpx * 77 / 252);
+  height: calc(480rpx * 69 / 244);
   background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   top: 76%;
-  background-image: var(--start-btn-img);
+  background-image: url("@/static/images/start-btn.png");
 }
 
 .start-text {

@@ -4,10 +4,6 @@ import {onLoad} from '@dcloudio/uni-app';
 import {useQaData} from '@/composable/useQaData';
 import QuizBtn from '@/component/quizBtn.vue';
 import {useProgress} from '@/composable/useProgress';
-import menuBackImg from '@/assets/menu-back.svg'
-import menuBackground from '@/assets/menu-background.png'
-import quizBtnsImg from '@/assets/quiz-btns.png'
-import menuBtnImg from '@/assets/menu-btn.png'
 
 const {markLevelCompleted} = useProgress();
 const {useQuestions, useLevels, useModules} = useQaData();
@@ -109,13 +105,9 @@ watch(questions, () => {
 </script>
 
 <template>
-  <image class="menu-back" :src="menuBackImg" @click="goBack"></image>
+  <image class="menu-back" src="@/static/images/menu-back.svg" @click="goBack"></image>
   <view
     class="menu-background"
-    :style="{
-      '--menu-background-img': `url(${menuBackground})`,
-      '--result-btn-img': `url(${menuBtnImg})`
-    }"
   >
     <view class="menu-title">
       <text class="menu-title-jichu">基础</text>
@@ -128,7 +120,6 @@ watch(questions, () => {
       <view
         class="quiz-btns"
         v-if="currentQuestion"
-        :style="{ '--quiz-btns-img': `url(${quizBtnsImg})` }"
       >
         <text>{{ currentQuestion.question }}</text>
 
@@ -176,8 +167,9 @@ watch(questions, () => {
 .menu-background {
   width: 100vw;
   height: 100vh;
-  background-image: var(--menu-background-img);
+  background-image: url("@/static/images/menu-background.png");
   background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -217,7 +209,7 @@ watch(questions, () => {
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  background-image: var(--quiz-btns-img);
+  background-image: url("@/static/images/quiz-btns.png");
   background-size: cover;
   font-family: slidefu-regular;
   font-size: 45rpx;
@@ -225,9 +217,11 @@ watch(questions, () => {
 
 .quiz-btn {
   width: 300rpx;
-  height: calc(300rpx * 55 / 174);
+  height: calc(300rpx * 47 / 166);
   color: white;
   font-size: 40rpx;
+  margin: 0;
+  padding: 0;
   line-height: 0.8;
   font-family: slidefu-regular;
 }
@@ -256,7 +250,7 @@ watch(questions, () => {
 .result-btn {
   width: 260rpx;
   height: calc(260rpx * 35 / 122);
-  background-image: var(--result-btn-img);
+  background-image: url("@/static/images/quiz-btn.png");
   background-size: cover;
   color: white;
   display: flex;

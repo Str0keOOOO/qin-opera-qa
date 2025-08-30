@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import {computed} from 'vue';
-import menuBtnImg from '@/assets/menu-btn.png';
-import menuBtnLockedImg from '@/assets/menu-btn-locked.png';
 
 
 const props = defineProps<{
@@ -27,10 +25,6 @@ function handleClick() {
   <view
     class="menu-btn"
     :class="classes"
-    :style="{
-      '--menu-btn-img': `url(${menuBtnImg})`,
-      '--menu-btn-locked-img': `url(${menuBtnLockedImg})`
-    }"
     @click="handleClick"
   >
     <slot/>
@@ -40,7 +34,7 @@ function handleClick() {
 <style scoped>
 .menu-btn {
   width: 100%;
-  height: 150rpx;
+  height: 141rpx;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -49,12 +43,12 @@ function handleClick() {
 
 .menu-btn.disabled {
   opacity: 0.3;
-  background-image: var(--menu-btn-locked-img);
+  background-image: url("@/static/images/menu-btn-locked.png");
 }
 
 .menu-btn.progressing, .menu-btn.completed {
   opacity: 1;
-  background-image: var(--menu-btn-img);
+  background-image: url("@/static/images/menu-btn.png");
 }
 
 </style>
