@@ -120,7 +120,7 @@ watch(questions, () => {
 
       <view
           class="quiz-btns"
-          style="background-image: url('/static/images/quiz-btns.png')"
+          style="background-image: url('/static/quiz-btns.webp')"
           v-if="currentQuestion"
       >
         <text>{{ currentQuestion.question }}</text>
@@ -139,10 +139,10 @@ watch(questions, () => {
           <view v-if="isSuccess" class="result-popup">
             <text class="result-title">恭喜你，全部正确</text>
             <view class="result-actions">
-              <button class="result-btn" style="background-image: url('/static/images/quiz-btn.png');" @click="goBack">
+              <button class="result-btn" style="background-image: url('/static/quiz-btn.webp');" @click="goBack">
                 返回目录
               </button>
-              <button class="result-btn" style="background-image: url('/static/images/quiz-btn.png');"
+              <button class="result-btn" style="background-image: url('/static/quiz-btn.webp');"
                       @click="nextQuiz">下一题
               </button>
             </view>
@@ -151,10 +151,10 @@ watch(questions, () => {
           <view v-else-if="isFail" class="result-popup">
             <text class="result-title">很遗憾，出错了</text>
             <view class="result-actions">
-              <button class="result-btn" style="background-image: url('/static/images/quiz-btn.png');" @click="goBack">
+              <button class="result-btn" style="background-image: url('/static/quiz-btn.webp');" @click="goBack">
                 返回目录
               </button>
-              <button class="result-btn" style="background-image: url('/static/images/quiz-btn.png');"
+              <button class="result-btn" style="background-image: url('/static/quiz-btn.webp');"
                       @click="restartQuiz">重新开始
               </button>
             </view>

@@ -27,7 +27,7 @@ const progressText = computed(() => `已完成${completedModulesCount.value}/${t
 
   <view
       class="home-background"
-      style="background-image: url('/static/images/home-background.png')"
+      style="background-image: url('/static/home-background.webp')"
   >
     <home-btn
         v-for="m in modules"

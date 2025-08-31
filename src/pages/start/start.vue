@@ -19,7 +19,7 @@ function startGame() {
     <view
         class="start-btn"
         @click="startGame"
-        style="background-image: url('/static/images/start-btn.png')"
+        style="background-image: url('/static/start-btn.webp')"
     >
       <text class="start-text">开始游戏</text>
     </view>
