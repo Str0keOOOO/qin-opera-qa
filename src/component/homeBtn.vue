@@ -33,6 +33,8 @@ function handleClick() {
 <style scoped>
 .home-btn {
   background-image: url("@/static/images/home-btn.png");
+  width: 80rpx;
+  height: calc(80rpx * 145 / 39);
   background-size: cover;
   display: flex;
   align-items: center;
@@ -60,5 +62,3 @@ function handleClick() {
   color: black;
 }
 </style>
-<script setup lang="ts">
-</script>

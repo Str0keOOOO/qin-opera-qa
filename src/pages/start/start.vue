@@ -8,6 +8,7 @@ function startGame() {
 <template>
   <view
       class="start-background"
+      style="background-image: url('/static/images/start-background.png')"
   >
     <view class="start-title">
       <text class="start-title-qin">秦</text>
@@ -18,6 +19,7 @@ function startGame() {
     <view
         class="start-btn"
         @click="startGame"
+        style="background-image: url('/static/images/start-btn.png')"
     >
       <text class="start-text">开始游戏</text>
     </view>
@@ -31,7 +33,6 @@ function startGame() {
   background-size: cover;
   display: flex;
   justify-content: center;
-  background-image: url("@/static/images/start-background.png");
 }
 
 .start-btn {
@@ -43,7 +44,6 @@ function startGame() {
   justify-content: center;
   position: relative;
   top: 76%;
-  background-image: url("@/static/images/start-btn.png");
 }
 
 .start-text {
@@ -81,6 +81,4 @@ function startGame() {
   left: 60rpx;
   position: relative;
 }
-
-
 </style>

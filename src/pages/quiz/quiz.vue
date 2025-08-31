@@ -82,7 +82,7 @@ function nextQuiz() {
       url: `/pages/quiz/quiz?moduleId=${nextModule.moduleId}&levelId=1`
     });
   } else {
-    uni.navigateTo({ url: '/pages/home/home' });
+    uni.navigateTo({url: '/pages/home/home'});
   }
 }
 
@@ -105,9 +105,10 @@ watch(questions, () => {
 </script>
 
 <template>
-  <image class="menu-back" src="@/static/images/menu-back.svg" @click="goBack"></image>
+  <image class="menu-back" src="/static/images/menu-back.svg" @click="goBack"></image>
   <view
-    class="menu-background"
+      class="menu-background"
+      style="background-image: url('/static/images/menu-background.png')"
   >
     <view class="menu-title">
       <text class="menu-title-jichu">基础</text>
@@ -118,8 +119,9 @@ watch(questions, () => {
       <text class="quiz-title">{{ progressText }}</text>
 
       <view
-        class="quiz-btns"
-        v-if="currentQuestion"
+          class="quiz-btns"
+          style="background-image: url('/static/images/quiz-btns.png')"
+          v-if="currentQuestion"
       >
         <text>{{ currentQuestion.question }}</text>
 
@@ -137,16 +139,24 @@ watch(questions, () => {
           <view v-if="isSuccess" class="result-popup">
             <text class="result-title">恭喜你，全部正确</text>
             <view class="result-actions">
-              <button class="result-btn" @click="goBack">返回目录</button>
-              <button class="result-btn" @click="nextQuiz">下一题</button>
+              <button class="result-btn" style="background-image: url('/static/images/quiz-btn.png');" @click="goBack">
+                返回目录
+              </button>
+              <button class="result-btn" style="background-image: url('/static/images/quiz-btn.png');"
+                      @click="nextQuiz">下一题
+              </button>
             </view>
           </view>
 
           <view v-else-if="isFail" class="result-popup">
             <text class="result-title">很遗憾，出错了</text>
             <view class="result-actions">
-              <button class="result-btn" @click="goBack">返回目录</button>
-              <button class="result-btn" @click="restartQuiz">重新开始</button>
+              <button class="result-btn" style="background-image: url('/static/images/quiz-btn.png');" @click="goBack">
+                返回目录
+              </button>
+              <button class="result-btn" style="background-image: url('/static/images/quiz-btn.png');"
+                      @click="restartQuiz">重新开始
+              </button>
             </view>
           </view>
         </uni-popup>
@@ -167,7 +177,6 @@ watch(questions, () => {
 .menu-background {
   width: 100vw;
   height: 100vh;
-  background-image: url("@/static/images/menu-background.png");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -209,7 +218,6 @@ watch(questions, () => {
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  background-image: url("@/static/images/quiz-btns.png");
   background-size: cover;
   font-family: slidefu-regular;
   font-size: 45rpx;
@@ -250,7 +258,6 @@ watch(questions, () => {
 .result-btn {
   width: 260rpx;
   height: calc(260rpx * 35 / 122);
-  background-image: url("@/static/images/quiz-btn.png");
   background-size: cover;
   color: white;
   display: flex;

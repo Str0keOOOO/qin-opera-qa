@@ -29,9 +29,10 @@ onLoad((options: any) => {
 </script>
 
 <template>
-  <image class="menu-back" src="@/static/images/menu-back.svg" @click="goBack"/>
+  <image class="menu-back" src="/static/images/menu-back.svg" @click="goBack"/>
   <view
-    class="menu-background"
+      class="menu-background"
+      style="background-image: url('/static/images/menu-background.png'); "
   >
     <view class="menu-title">
       <text>基础</text>
@@ -64,7 +65,6 @@ onLoad((options: any) => {
 .menu-background {
   width: 100vw;
   height: 100vh;
-  background-image: url("@/static/images/menu-background.png");
   background-size: cover;
   display: flex;
   justify-content: center;
