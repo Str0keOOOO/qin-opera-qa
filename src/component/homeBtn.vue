@@ -32,7 +32,7 @@ function handleClick() {
 
 <style scoped>
 .home-btn {
-  background-image: url("@/static/images/home-btn.png");
+  background-image: url("@/static/home-btn.webp");
   width: 80rpx;
   height: calc(80rpx * 145 / 39);
   background-size: cover;
@@ -51,7 +51,7 @@ function handleClick() {
   width: 100%;
   height: 100%;
   position: absolute;
-  background-image: url("@/static/images/home-btn-lock.png");
+  background-image: url("@/static/home-btn-lock.webp");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

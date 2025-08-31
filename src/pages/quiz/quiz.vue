@@ -105,10 +105,10 @@ watch(questions, () => {
 </script>
 
 <template>
-  <image class="menu-back" src="/static/images/menu-back.svg" @click="goBack"></image>
+  <image class="menu-back" src="/static/menu-back.webp" @click="goBack"></image>
   <view
       class="menu-background"
-      style="background-image: url('/static/images/menu-background.png')"
+      style="background-image: url('/static/menu-background.webp')"
   >
     <view class="menu-title">
       <text class="menu-title-jichu">基础</text>

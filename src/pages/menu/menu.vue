@@ -29,10 +29,10 @@ onLoad((options: any) => {
 </script>
 
 <template>
-  <image class="menu-back" src="/static/images/menu-back.svg" @click="goBack"/>
+  <image class="menu-back" src="/static/menu-back.webp" @click="goBack"/>
   <view
       class="menu-background"
-      style="background-image: url('/static/images/menu-background.png'); "
+      style="background-image: url('/static/menu-background.webp'); "
   >
     <view class="menu-title">
       <text>基础</text>

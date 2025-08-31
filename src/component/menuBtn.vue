@@ -43,12 +43,12 @@ function handleClick() {
 
 .menu-btn.disabled {
   opacity: 0.3;
-  background-image: url("@/static/images/menu-btn-locked.png");
+  background-image: url("@/static/menu-btn-locked.webp");
 }
 
 .menu-btn.progressing, .menu-btn.completed {
   opacity: 1;
-  background-image: url("@/static/images/menu-btn.png");
+  background-image: url("@/static/menu-btn.webp");
 }
 
 </style>

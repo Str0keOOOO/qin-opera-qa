@@ -31,18 +31,18 @@ function handleClick() {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("@/static/images/quiz-btn.png");
+  background-image: url("@/static/quiz-btn.webp");
   background-size: cover;
   border-radius: 0;
   color: white;
 }
 
 .quiz-btn.correct:active {
-  background-image: url("@/static/images/quiz-btn-correct.png");
+  background-image: url("@/static/quiz-btn-correct.webp");
 }
 
 .quiz-btn.wrong:active {
-  background-image: url("@/static/images/quiz-btn-wrong.png");
+  background-image: url("@/static/quiz-btn-wrong.webp");
 }
 
 .quiz-btn-border {

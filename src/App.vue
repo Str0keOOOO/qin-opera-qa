@@ -5,7 +5,7 @@ onLaunch(() => {
   console.log("App Launch");
   uni.loadFontFace({
     family: 'slidefu-regular',
-    source: 'url("https://cdn.jsdelivr.net/gh/Str0keOOOO/qin-opera-qa@main/src/static/fonts/slidefu-regular-croped.woff2")',
+    source: 'url("https://cdn.jsdelivr.net/gh/Str0keOOOO/fonts@main/slidefu-regular-croped.woff2")',
     global: true,
     local: true,
     success() {

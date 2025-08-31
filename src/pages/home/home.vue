@@ -22,7 +22,7 @@ const progressText = computed(() => `已完成${completedModulesCount.value}/${t
 <template>
   <view class="home-progress">
     <text class="home-progress-text">{{ progressText }}</text>
-    <image class="home-progress-bar" src="@/static/images/home-progress-bar.png"/>
+    <image class="home-progress-bar" src="@/static/home-progress-bar.webp"/>
   </view>
 
   <view

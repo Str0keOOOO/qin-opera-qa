@@ -8,7 +8,7 @@ function startGame() {
 <template>
   <view
       class="start-background"
-      style="background-image: url('/static/images/start-background.png')"
+      style="background-image: url('/static/start-background.webp')"
   >
     <view class="start-title">
       <text class="start-title-qin">秦</text>
