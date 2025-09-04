@@ -4,9 +4,11 @@ import {onLoad} from '@dcloudio/uni-app';
 import {useQaData} from '@/composable/useQaData';
 import QuizBtn from '@/component/quizBtn.vue';
 import {useProgress} from '@/composable/useProgress';
+import {useAudio} from "@/composable/useAudio";
 
 const {markLevelCompleted} = useProgress();
 const {useQuestions, useLevels, useModules} = useQaData();
+const {playClick, playSuccess, playFail} = useAudio()
 
 const moduleId = ref(0);
 const levelId = ref(0);
@@ -41,6 +43,7 @@ function selectOption(i: number) {
 
   const correct = (i + 1) === currentQuestion.value.answer;
   if (!correct) {
+    playFail()
     openPopup('fail');
     return;
   }
@@ -48,10 +51,11 @@ function selectOption(i: number) {
   // 最后一题且正确 -> 记录关卡完成
   if (currentIndex.value === questions.value.length - 1) {
     markLevelCompleted(moduleId.value, levelId.value);
+    playSuccess()
     openPopup('success');
     return;
   }
-
+  playClick()
   setTimeout(() => {
     currentIndex.value++;
     selected.value = null;
@@ -59,15 +63,17 @@ function selectOption(i: number) {
 }
 
 function restartQuiz() {
-  uni.navigateTo({
+  playClick()
+  uni.redirectTo({
     url: `/pages/quiz/quiz?moduleId=${moduleId.value}&levelId=${levelId.value}`
   });
 }
 
 function nextQuiz() {
+  playClick()
   const hasNextLevel = levels.value.some(l => l.levelId === levelId.value + 1);
   if (hasNextLevel) {
-    uni.navigateTo({
+    uni.redirectTo({
       url: `/pages/quiz/quiz?moduleId=${moduleId.value}&levelId=${levelId.value + 1}`
     });
     return;
@@ -78,18 +84,17 @@ function nextQuiz() {
   const nextModule = sorted[idx + 1];
 
   if (nextModule) {
-    uni.navigateTo({
+    uni.redirectTo({
       url: `/pages/quiz/quiz?moduleId=${nextModule.moduleId}&levelId=1`
     });
   } else {
-    uni.navigateTo({url: '/pages/home/home'});
+    uni.navigateBack()
   }
 }
 
 function goBack() {
-  uni.navigateTo({
-    url: `/pages/menu/menu?moduleId=${moduleId.value}`
-  });
+  playClick()
+  uni.navigateBack()
 }
 
 onLoad((options: any) => {

@@ -2,15 +2,17 @@
 import {computed} from 'vue'
 import {useQaData} from '@/composable/useQaData'
 import {useProgress} from '@/composable/useProgress'
+import {useAudio} from "@/composable/useAudio";
 import HomeBtn from '@/component/homeBtn.vue'
 
 
 const {useModules} = useQaData()
 const {isModuleCompleted, isModuleUnlocked, completedModulesCount} = useProgress()
-
+const {playClick} = useAudio()
 const modules = useModules()
 
 function startGame(moduleId: number) {
+  playClick()
   if (!isModuleUnlocked(moduleId)) return
   uni.navigateTo({url: `/pages/menu/menu?moduleId=${moduleId}`})
 }
@@ -22,7 +24,8 @@ const progressText = computed(() => `已完成${completedModulesCount.value}/${t
 <template>
   <view class="home-progress">
     <text class="home-progress-text">{{ progressText }}</text>
-    <image class="home-progress-bar" src="data:image/webp;base64,UklGRowDAABXRUJQVlA4WAoAAAAQAAAAiwAADAAAQUxQSJgBAAABkEPbtqk969wb27bd27aN3kn7j7+KU9u2bdu2bfPj27FfHxETYNSrRyYjzdgDB7ISwtl2HxxrljYj9evhuCBtikSy74/0fDchjCa+7xnfmfNTdLN03jopkVRSa6adHfSpLBY2RrkPA89NW6NAibg6pr+lT3Ok8c31dsfGTpgLE2d02rTjrZqPk2Z/Cm6np7o0YcNUXJeJKUNnbSmJCw9HqS2zhqZM7OyYun68VAtuBgmdOvowrmNHzyxfciAnBrf0378FRu6Di1ecPXpMwb2jp5QIrkNfffuxX+Mdp9+8DHQRs3Aw44KSr16d3tGoX0Tf9sFTbtL6STVcdZ26/Xj+vjs6780IQbM0l3Rv34K7t0+rJtUnr59UhjQY3z2k+OgC7aDoNuXD/n9G/mBjQWhXYHRch/iu8cMRiqviB23C6B6kcyGQRj0wtuhdNcU1/Ds/maqkkh+DR+Bpe5wQPNkaD8/1Ia6kUn/B2BkdFlWkGuAZXPL/V2IQHqgaU2RYbAv2czjSkK1WWjzgSfP/83jA42plIQ2O7wNWUDggzgEAAJAKAJ0BKowADQA+kT6cSiWjIqGnOApIsBIJaADTXUFWdXV+AwtWyUq5E+jN2n6B/jroK/p/+59KbMs8veo1/Yupn6G/7GAoK9r+lihhs8i5DQ37yB9nGz3UCSLQIAD+5q+5IL5clC2oXRie51y3Dhr19IjUFHzSO4rIBoiC/kVZvReQHlH55usgkPAzkKDRwODNnHw7lDB585//dZ+kO02NUbIXEH6FoFEQ3GYHqNOZqHmguRXold6TEfkuR4yxnOqOBVL7iDa5o2l5e+eHdtqN5C2Ate82KB/A06Yty/K4T8iKMDaOVVtwrSrngdNptk9rbicrZV/pVP2Q/OWsTXrYreNy7GUp6t/wqZRaW7//zcSwDgAEKX6PsjuxWwb6zR9imaGVAulqUdJNjWA/GvPEZ46TUCFhLfd+6p/Qvjai/ZUW1wzkXR3VRQjvWOY9M8nik1MFXgCAiSu974s56fjG2eK5EgdLq8sb23qrIBssNd4IYCsTV7vhQiVGkgMYeW7PNcOG7D0phel2RUS3aTb3V+R4dOhPZlhjRqF7leb89YXnZdmzsXaXvz4WfmSJrq9pE5NXvo/AVzB+sBAxKc3kchXVb54tKZQHRdcAAA=="/>
+    <image class="home-progress-bar"
+           src="data:image/webp;base64,UklGRowDAABXRUJQVlA4WAoAAAAQAAAAiwAADAAAQUxQSJgBAAABkEPbtqk969wb27bd27aN3kn7j7+KU9u2bdu2bfPj27FfHxETYNSrRyYjzdgDB7ISwtl2HxxrljYj9evhuCBtikSy74/0fDchjCa+7xnfmfNTdLN03jopkVRSa6adHfSpLBY2RrkPA89NW6NAibg6pr+lT3Ok8c31dsfGTpgLE2d02rTjrZqPk2Z/Cm6np7o0YcNUXJeJKUNnbSmJCw9HqS2zhqZM7OyYun68VAtuBgmdOvowrmNHzyxfciAnBrf0378FRu6Di1ecPXpMwb2jp5QIrkNfffuxX+Mdp9+8DHQRs3Aw44KSr16d3tGoX0Tf9sFTbtL6STVcdZ26/Xj+vjs6780IQbM0l3Rv34K7t0+rJtUnr59UhjQY3z2k+OgC7aDoNuXD/n9G/mBjQWhXYHRch/iu8cMRiqviB23C6B6kcyGQRj0wtuhdNcU1/Ds/maqkkh+DR+Bpe5wQPNkaD8/1Ia6kUn/B2BkdFlWkGuAZXPL/V2IQHqgaU2RYbAv2czjSkK1WWjzgSfP/83jA42plIQ2O7wNWUDggzgEAAJAKAJ0BKowADQA+kT6cSiWjIqGnOApIsBIJaADTXUFWdXV+AwtWyUq5E+jN2n6B/jroK/p/+59KbMs8veo1/Yupn6G/7GAoK9r+lihhs8i5DQ37yB9nGz3UCSLQIAD+5q+5IL5clC2oXRie51y3Dhr19IjUFHzSO4rIBoiC/kVZvReQHlH55usgkPAzkKDRwODNnHw7lDB585//dZ+kO02NUbIXEH6FoFEQ3GYHqNOZqHmguRXold6TEfkuR4yxnOqOBVL7iDa5o2l5e+eHdtqN5C2Ate82KB/A06Yty/K4T8iKMDaOVVtwrSrngdNptk9rbicrZV/pVP2Q/OWsTXrYreNy7GUp6t/wqZRaW7//zcSwDgAEKX6PsjuxWwb6zR9imaGVAulqUdJNjWA/GvPEZ46TUCFhLfd+6p/Qvjai/ZUW1wzkXR3VRQjvWOY9M8nik1MFXgCAiSu974s56fjG2eK5EgdLq8sb23qrIBssNd4IYCsTV7vhQiVGkgMYeW7PNcOG7D0phel2RUS3aTb3V+R4dOhPZlhjRqF7leb89YXnZdmzsXaXvz4WfmSJrq9pE5NXvo/AVzB+sBAxKc3kchXVb54tKZQHRdcAAA=="/>
   </view>
 
   <view

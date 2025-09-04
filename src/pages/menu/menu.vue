@@ -3,8 +3,10 @@ import {ref} from 'vue';
 import {onLoad} from '@dcloudio/uni-app';
 import {useQaData} from '@/composable/useQaData';
 import {useProgress} from '@/composable/useProgress';
+import {useAudio} from "@/composable/useAudio";
 import menuBtn from '@/component/menuBtn.vue';
 
+const {playClick} = useAudio();
 
 const {useLevels} = useQaData();
 const {isLevelCompleted, isLevelUnlocked} = useProgress();
@@ -14,13 +16,15 @@ const levelItems = useLevels(moduleId);
 
 function startGame(levelId: number, disabled: boolean) {
   if (disabled) return;
+  playClick()
   uni.navigateTo({
     url: `/pages/quiz/quiz?moduleId=${moduleId.value}&levelId=${levelId}`
   });
 }
 
 function goBack() {
-  uni.navigateTo({url: '/pages/home/home'});
+  playClick()
+  uni.navigateBack()
 }
 
 onLoad((options: any) => {

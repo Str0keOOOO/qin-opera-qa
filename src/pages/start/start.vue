@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import {useAudio} from "@/composable/useAudio";
+
+const {playClick} = useAudio()
 
 function startGame() {
+  playClick()
   uni.navigateTo({url: '/pages/home/home'})
 }
 </script>
